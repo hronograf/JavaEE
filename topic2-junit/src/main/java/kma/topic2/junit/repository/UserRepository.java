@@ -43,6 +43,11 @@ public class UserRepository {
         return USER_DATABASE.containsKey(login);
     }
 
+    public static void reinitialize(){
+        USER_DATABASE.clear();
+        USER_DATABASE.putAll(initDatabase());
+    }
+
     private static Map<String, User> initDatabase() {
         final Map<String, User> database = new HashMap<>();
         database.put("login1", User.builder().login("login1").password("password1").fullName("fullName1").build());

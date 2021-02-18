@@ -4,6 +4,7 @@ import kma.topic2.junit.model.NewUser;
 import kma.topic2.junit.model.User;
 import kma.topic2.junit.repository.UserRepository;
 import kma.topic2.junit.validation.UserValidator;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,6 +23,11 @@ class UserServiceTest {
     private UserRepository userRepository;
     @MockBean
     private UserValidator  userValidator;
+
+    @BeforeEach
+    void reinitializeRepository() {
+        UserRepository.reinitialize();
+    }
 
     @Test
     void shouldCreateNewUser() {
