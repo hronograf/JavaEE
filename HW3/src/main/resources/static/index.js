@@ -51,4 +51,16 @@ function fillBooksTable(books) {
     $("#booksTableBody").html(tableContent);
 }
 
+
+$('#searchForm').submit(function(e){
+    e.preventDefault();
+
+    $.ajax({
+    url: '/books/search?' + $.param({query: $(this).find('[name=query]').val()}),
+    success: function (response) {
+        fillBooksTable(response);
+    }
+    });
+ });
+
 })();
