@@ -8,3 +8,7 @@ Unit and integration tests
 <a href="app">HW3 Spring Boot Starter WEB:</a> 
 <br>
 GET, POST, @ModelAttribute, HTTP Redirect, Thymeleaf::each
+
+<a href="HW4">HW4 REST:</a>
+<br>
+REST API, AJAX, testing REST
