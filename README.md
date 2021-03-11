@@ -12,3 +12,7 @@ GET, POST, @ModelAttribute, HTTP Redirect, Thymeleaf::each
 <a href="HW4">HW4 REST:</a>
 <br>
 REST API, AJAX, testing REST
+
+<a href="HW5">HW5 Spring Boot Auto-Configuration:</a>
+<br>
+own library, spring.factories, application.properties, @ComponentScan, @Conditional
