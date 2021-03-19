@@ -2,8 +2,6 @@ package com.bigbook.app.book;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.h2.jdbc.JdbcSQLException;
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

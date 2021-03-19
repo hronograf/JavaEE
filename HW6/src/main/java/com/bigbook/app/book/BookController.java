@@ -1,16 +1,11 @@
 package com.bigbook.app.book;
 
 import lombok.RequiredArgsConstructor;
-import org.h2.jdbc.JdbcSQLException;
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.PersistenceException;
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor

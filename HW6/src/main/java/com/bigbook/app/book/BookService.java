@@ -1,10 +1,8 @@
 package com.bigbook.app.book;
 
 import lombok.RequiredArgsConstructor;
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
