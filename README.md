@@ -16,3 +16,7 @@ REST API, AJAX, testing REST
 <a href="HW5">HW5 Spring Boot Auto-Configuration:</a>
 <br>
 own library, spring.factories, application.properties, @ComponentScan, @Conditional
+
+<a href="HW6">HW6 JPA & Spring Data Starter:</a>
+<br>
+hibernate, @Entity,  EntityManager, h2database
