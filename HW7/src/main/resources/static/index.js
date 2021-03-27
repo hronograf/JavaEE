@@ -1,5 +1,7 @@
 (function () {
 
+    let nextPage = 0;
+
     $('#addBookForm').submit(function (e) {
         e.preventDefault();
 
@@ -26,15 +28,53 @@
     });
 
     function updateBooksTable() {
+        nextPage = 0;
+        searchRequest('', '', nextPage, fillBooksTable);
+    }
+
+    $('#searchForm').submit(function (e) {
+        e.preventDefault();
+        nextPage = 0;
+        searchRequest($(this).find('[name=title]').val(), $(this).find('[name=isbn]').val(), nextPage, fillBooksTable);
+    });
+
+    $('#moreBooksButton').click(function () {
+        let searchFormEl = $('#searchForm');
+        searchRequest(searchFormEl.find('[name=title]').val(), searchFormEl.find('[name=isbn]').val(), nextPage, addToBooksTable);
+    });
+
+    function searchRequest(title, isbn, page, changeBookTableFunc) {
         $.ajax({
-            url: '/books/all',
+            url: '/books/search?' + $.param({
+                title: title,
+                isbn: isbn,
+                page: page
+            }),
             success: function (response) {
-                fillBooksTable(response);
+                changeBookTableFunc(response.data.books);
+                updateUpToNumber(response.data.canBeShown);
+                if (response.data.books.length > 0)
+                    nextPage++;
+            },
+            error: function (err) {
+                console.log(err);
             }
         });
     }
 
+    function updateUpToNumber(number) {
+        $('#upToNumber').html(number);
+    }
+
+    function addToBooksTable(books) {
+        $("#booksTableBody").append(generateBooksHtml(books));
+    }
+
     function fillBooksTable(books) {
+        $("#booksTableBody").html(generateBooksHtml(books));
+    }
+
+    function generateBooksHtml(books) {
         let tableContent = "";
         let newLocation;
         for (let i = 0; i < books.length; ++i) {
@@ -47,24 +87,8 @@
         </tr>
         `;
         }
-
-        $("#booksTableBody").html(tableContent);
+        return tableContent;
     }
-
-
-    $('#searchForm').submit(function (e) {
-        e.preventDefault();
-
-        $.ajax({
-            url: '/books/search?' + $.param({
-                title: $(this).find('[name=title]').val(),
-                isbn: $(this).find('[name=isbn]').val()
-            }),
-            success: function (response) {
-                fillBooksTable(response);
-            }
-        });
-    });
 
     updateBooksTable();
 })();
