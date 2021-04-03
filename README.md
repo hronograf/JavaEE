@@ -20,3 +20,7 @@ own library, spring.factories, application.properties, @ComponentScan, @Conditio
 <a href="HW6">HW6 JPA & Spring Data Starter:</a>
 <br>
 hibernate, @Entity,  EntityManager, h2database
+
+<a href="HW7">HW7 Spring Data:</a>
+<br>
+JpaRepository, JpaSpecificationExecutor, Specification, PageRequest
