@@ -7,12 +7,12 @@ import com.bigbook.app.utils.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-@RestController
 @RequiredArgsConstructor
+
+@RestController
 @RequestMapping("/auth")
 public class AuthRestController {
 
@@ -27,11 +27,6 @@ public class AuthRestController {
     @PostMapping("/register")
     public Response<RedirectResponseDto> register(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
         return Response.success(authService.register(registerRequestDto));
-    }
-
-    @GetMapping("/logout")
-    public void logoutGet(HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
-        authService.logout(servletResponse);
     }
 
 }
