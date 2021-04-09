@@ -1,6 +1,6 @@
 package com.bigbook.app.user;
 
-import com.bigbook.app.auth.permission.PermissionEntity;
+import com.bigbook.app.auth.permissions.PermissionEntity;
 import com.bigbook.app.book.BookEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

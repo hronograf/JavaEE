@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.stream.Collectors;
 
+
 @Getter
 public class SecurityUser extends User {
 
@@ -14,10 +15,8 @@ public class SecurityUser extends User {
     public SecurityUser(UserEntity userEntity) {
         super(userEntity.getUsername(), userEntity.getPassword(),
                 userEntity.getPermissions().stream()
-                        .map(permission -> permission.getPermission().getAuthority())
+                        .map(p -> p.getPermission().getAuthority())
                         .collect(Collectors.toList()));
         this.userEntity = userEntity;
     }
-
-    public static SecurityUser from(UserEntity userEntity) {return new SecurityUser(userEntity);}
 }

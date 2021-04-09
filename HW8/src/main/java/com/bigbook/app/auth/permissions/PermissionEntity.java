@@ -1,4 +1,4 @@
-package com.bigbook.app.auth.permission;
+package com.bigbook.app.auth.permissions;
 
 import lombok.Data;
 
@@ -21,6 +21,12 @@ public class PermissionEntity {
     public static PermissionEntity from(Permission permission) {
         PermissionEntity permissionEntity = new PermissionEntity();
         permissionEntity.setPermission(permission);
+        return permissionEntity;
+    }
+
+    public static PermissionEntity fromId(Integer id) {
+        PermissionEntity permissionEntity = new PermissionEntity();
+        permissionEntity.setId(id);
         return permissionEntity;
     }
 

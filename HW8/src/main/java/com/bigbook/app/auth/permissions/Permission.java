@@ -1,4 +1,4 @@
-package com.bigbook.app.auth.permission;
+package com.bigbook.app.auth.permissions;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

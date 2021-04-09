@@ -1,8 +1,8 @@
 package com.bigbook.app;
 
-import com.bigbook.app.auth.permission.Permission;
-import com.bigbook.app.auth.permission.PermissionEntity;
-import com.bigbook.app.auth.permission.PermissionRepository;
+import com.bigbook.app.auth.permissions.Permission;
+import com.bigbook.app.auth.permissions.PermissionEntity;
+import com.bigbook.app.auth.permissions.PermissionRepository;
 import com.bigbook.app.book.BookEntity;
 import com.bigbook.app.book.BookRepository;
 import com.bigbook.app.user.UserEntity;
@@ -34,20 +34,21 @@ public class DbInitializer {
                             .build());
         }
 
-        PermissionEntity permission = PermissionEntity.from(Permission.ADD_BOOK_TO_FAVORITE);
-
-        permissionRepository.saveAndFlush(permission);
+        Permission[] permissions = Permission.values();
+        for(Permission p : permissions) {
+            PermissionEntity permissionEntity = new PermissionEntity();
+            permissionEntity.setId(p.ordinal());
+            permissionEntity.setPermission(p);
+            permissionRepository.saveAndFlush(permissionEntity);
+        }
 
         userRepository.saveAndFlush(
                 UserEntity.builder()
                         .username("user")
                         .password("$2y$12$4Nquq9ZNFW78ONR3DfXFJeyCA27KJ1A.D2jxUGwyUSOhG8SBHNS0e") // user
-                        .permissions(List.of(permission))
+                        .permissions(List.of(PermissionEntity.fromId(Permission.ADD_BOOK_TO_FAVORITE.ordinal())))
                         .build()
         );
     }
 
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
 }
