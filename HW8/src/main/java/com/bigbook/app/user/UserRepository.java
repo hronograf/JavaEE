@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<UserEntity, Integer>, JpaSpecificationExecutor<UserEntity> {
     Optional<UserEntity> findByUsername(String username);
 
-    @Query("select u from UserEntity u left join fetch u.favoriteBooks left join fetch u.permissions where u.id=:id")
-    Optional<UserEntity> findByIdWithFetchAll(@Param("id")Integer id);
+    @Query("select u from UserEntity u left join fetch u.favoriteBooks where u.id=:id")
+    Optional<UserEntity> findByIdWithFetchFavouriteBooks(@Param("id")Integer id);
 }

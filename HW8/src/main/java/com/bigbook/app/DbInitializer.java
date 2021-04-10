@@ -21,7 +21,7 @@ public class DbInitializer {
     private final PermissionRepository permissionRepository;
     private final UserRepository userRepository;
 
-    private final int INIT_BOOK_AMOUNT = 10;
+    private final int INIT_BOOK_AMOUNT = 20;
 
     @EventListener
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -29,24 +29,26 @@ public class DbInitializer {
             bookRepository.saveAndFlush(
                     BookEntity.builder()
                             .isbn("0-00-" + i)
-                            .title("InitBook_" + i)
-                            .author("InitAuthor_" + i)
+                            .title("initBook_" + (char)(97 + i))
+                            .author("initAuthor_" + (char)(97 + i))
                             .build());
         }
 
-        Permission[] permissions = Permission.values();
-        for(Permission p : permissions) {
-            PermissionEntity permissionEntity = new PermissionEntity();
-            permissionEntity.setId(p.ordinal());
-            permissionEntity.setPermission(p);
-            permissionRepository.saveAndFlush(permissionEntity);
-        }
+        PermissionEntity addNewBookPermission = new PermissionEntity();
+        addNewBookPermission.setPermission(Permission.ADD_NEW_BOOK);
+        permissionRepository.saveAndFlush(addNewBookPermission);
 
         userRepository.saveAndFlush(
                 UserEntity.builder()
                         .username("user")
                         .password("$2y$12$4Nquq9ZNFW78ONR3DfXFJeyCA27KJ1A.D2jxUGwyUSOhG8SBHNS0e") // user
-                        .permissions(Set.of(PermissionEntity.fromId(Permission.ADD_BOOK_TO_FAVORITE.ordinal())))
+                        .build()
+        );
+        userRepository.saveAndFlush(
+                UserEntity.builder()
+                        .username("admin")
+                        .password("$2y$12$3Qe3y0Wunu0bcomf8vjsM.hIDelZuQ3cEAvv6Ejp34wOjXUs16kKe") // admin
+                        .permissions(Set.of(addNewBookPermission))
                         .build()
         );
     }

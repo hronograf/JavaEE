@@ -26,7 +26,7 @@ import static com.bigbook.app.book.BookEntity.titleIgnoreCaseContains;
 @RequiredArgsConstructor
 public class BookService {
 
-    public static int BOOKS_PER_PAGE = 5;
+    public static int BOOKS_PER_PAGE = 10;
 
     private final BookRepository bookRepository;
     private final UserRepository userRepository;
@@ -54,20 +54,20 @@ public class BookService {
     }
 
     public void addToFavourites(ChangeFavouritesRequestDto requestDto) {
-        UserEntity contextUser = userRepository.findByIdWithFetchAll(JwtTokenService.getCurrentUserId()).orElseThrow();
+        UserEntity contextUser = userRepository.findByIdWithFetchFavouriteBooks(JwtTokenService.getCurrentUserId()).orElseThrow();
         contextUser.getFavoriteBooks().add(new BookEntity(requestDto.getIsbn()));
         userRepository.saveAndFlush(contextUser);
     }
 
     public Set<BookInfoDto> getFavouriteBooks() {
-        UserEntity contextUser = userRepository.findByIdWithFetchAll(JwtTokenService.getCurrentUserId()).orElseThrow();
+        UserEntity contextUser = userRepository.findByIdWithFetchFavouriteBooks(JwtTokenService.getCurrentUserId()).orElseThrow();
         return contextUser.getFavoriteBooks().stream()
                 .map(BookInfoDto::new)
                 .collect(Collectors.toSet());
     }
 
     public void getBookInfo(String isbn, Model model) {
-        UserEntity contextUser = userRepository.findByIdWithFetchAll(JwtTokenService.getCurrentUserId()).orElseThrow();
+        UserEntity contextUser = userRepository.findByIdWithFetchFavouriteBooks(JwtTokenService.getCurrentUserId()).orElseThrow();
         BookEntity bookEntity = bookRepository.findById(isbn).orElseThrow(BadRequestException::new);
         model.addAttribute("book", bookEntity);
         boolean isBookFavourite = contextUser.getFavoriteBooks().stream()
@@ -76,7 +76,7 @@ public class BookService {
     }
 
     public void deleteFromFavourites(ChangeFavouritesRequestDto requestDto) {
-        UserEntity contextUser = userRepository.findByIdWithFetchAll(JwtTokenService.getCurrentUserId()).orElseThrow();
+        UserEntity contextUser = userRepository.findByIdWithFetchFavouriteBooks(JwtTokenService.getCurrentUserId()).orElseThrow();
         contextUser.getFavoriteBooks().removeIf(book -> book.getIsbn().equals(requestDto.getIsbn()));
         userRepository.saveAndFlush(contextUser);
     }

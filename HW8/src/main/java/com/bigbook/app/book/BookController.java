@@ -1,6 +1,7 @@
 package com.bigbook.app.book;
 
 import com.bigbook.app.auth.jwt.JwtTokenService;
+import com.bigbook.app.auth.permissions.Permission;
 import com.bigbook.app.user.UserEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,9 @@ public class BookController {
     @GetMapping({"", "/"})
     public String index(Model model) {
         model.addAttribute("books", bookRepository.findAll());
+        boolean canAddNewBook = JwtTokenService.getContextUser().getPermissions().stream()
+                .anyMatch(permissionEntity -> permissionEntity.getPermission().equals(Permission.ADD_NEW_BOOK));
+        model.addAttribute("canAddNewBook", canAddNewBook);
         return "books";
     }
 

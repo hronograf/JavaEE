@@ -5,6 +5,7 @@ import com.bigbook.app.book.dto.ChangeFavouritesRequestDto;
 import com.bigbook.app.book.dto.SearchBookResponseDto;
 import com.bigbook.app.utils.Response;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,9 +17,9 @@ import java.util.Set;
 @RequestMapping("/books")
 public class BookRestController {
 
-    private final BookRepository bookRepository;
     private final BookService bookService;
 
+    @PreAuthorize("hasAuthority('ADD_NEW_BOOK')")
     @PostMapping("/create")
     public Response<Void> createBookPost(@RequestBody BookEntity bookEntity) {
         bookService.saveBook(bookEntity);

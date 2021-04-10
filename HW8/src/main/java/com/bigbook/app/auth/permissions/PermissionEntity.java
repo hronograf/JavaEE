@@ -24,10 +24,4 @@ public class PermissionEntity {
         return permissionEntity;
     }
 
-    public static PermissionEntity fromId(Integer id) {
-        PermissionEntity permissionEntity = new PermissionEntity();
-        permissionEntity.setId(id);
-        return permissionEntity;
-    }
-
 }

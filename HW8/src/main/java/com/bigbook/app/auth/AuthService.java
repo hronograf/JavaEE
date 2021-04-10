@@ -6,8 +6,6 @@ import com.bigbook.app.auth.dto.RegisterRequestDto;
 import com.bigbook.app.auth.exceptions.InvalidUsernameOrPasswordException;
 import com.bigbook.app.auth.exceptions.UsernameExistsException;
 import com.bigbook.app.auth.jwt.JwtTokenService;
-import com.bigbook.app.auth.permissions.Permission;
-import com.bigbook.app.auth.permissions.PermissionEntity;
 import com.bigbook.app.auth.security.SecurityUser;
 import com.bigbook.app.user.UserEntity;
 import com.bigbook.app.user.UserRepository;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -59,7 +56,6 @@ public class AuthService {
 
         UserEntity userEntity = UserEntity.builder()
                 .username(registerRequestDto.getUsername())
-                .permissions(Set.of(PermissionEntity.fromId(Permission.ADD_BOOK_TO_FAVORITE.ordinal())))
                 .password(passwordEncoder.encode(registerRequestDto.getPassword()))
                 .build();
         userRepository.saveAndFlush(userEntity);
