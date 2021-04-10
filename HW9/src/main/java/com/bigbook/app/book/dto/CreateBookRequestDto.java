@@ -11,9 +11,9 @@ public class CreateBookRequestDto {
     @Pattern(regexp = "^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)(?=^\\d.*)(?=.*\\d$)[\\d-]+$")
     private String isbn;
     @NotBlank
-    @Pattern(regexp = "^[A-Za-z0-9 ]{1,30}$")
+    @Pattern(regexp = "^(?!^\\s.*)(?!.*\\s$)[A-Za-z0-9 ]{1,30}$")
     private String title;
     @NotBlank
-    @Pattern(regexp = "^[A-Za-z ]{1,20}$")
+    @Pattern(regexp = "^(?!^\\s.*)(?!.*\\s$)[A-Za-z ]{1,20}$")
     private String author;
 }
