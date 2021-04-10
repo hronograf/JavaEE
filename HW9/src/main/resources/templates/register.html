@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <title>BigBook</title>
+
+    <style>
+        body,html {
+            height: 100%;
+        }
+    </style>
+
+</head>
+<body>
+<div class="container h-100">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="col col-sm-6 col-md-6 col-lg-6 col-xl-6">
+            <h1>Registration page</h1>
+            <br>
+            <form id="registerUserForm" oninput='confirmPassword.setCustomValidity(password.value !== confirmPassword.value ? "Passwords do not match." : "")'>
+                <div class="form-group">
+                    <label for="usernameInput">Username:</label>
+                    <input name="username" type="text" class="form-control form-control-lg" id="usernameInput"
+                           placeholder="[A-Za-z0-9]{4,10}" required="required" pattern="[A-Za-z0-9]{4,10}">
+                </div>
+                <div class="form-group">
+                    <label for="passwordInput">Password:</label>
+                    <input name="password" type="password" class="form-control form-control-lg" id="passwordInput"
+                           placeholder="[A-Za-z0-9]{4,20}" required="required" pattern="[A-Za-z0-9]{4,20}">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm password:</label>
+                    <input name="confirmPassword" type="password" class="form-control form-control-lg" id="confirmPassword"
+                           placeholder="Confirm password" required="required">
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button type="submit" class="btn btn-success btn-md">Sign Up</button>
+                </div>
+            </form>
+            <br>
+            <div class="d-flex justify-content-center">
+                <a href="/auth/login"><button type="button" class="btn btn-primary btn-md">Go to login page</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#registerUserForm').submit(function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: '/auth/register',
+            dataType: 'json',
+            data: JSON.stringify({
+                username: $(this).find('[name=username]').val(),
+                password: $(this).find('[name=password]').val()
+            }),
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            },
+            success: function (response) {
+                alert("Successfully registered, login please");
+                window.location.href = window.location.origin + response.data.redirectUrl;
+            },
+            error: function (jqXHR) {
+                alert(jqXHR.responseJSON.message);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
