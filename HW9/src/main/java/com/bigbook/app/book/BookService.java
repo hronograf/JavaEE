@@ -3,6 +3,7 @@ package com.bigbook.app.book;
 import com.bigbook.app.auth.jwt.JwtTokenService;
 import com.bigbook.app.book.dto.BookInfoDto;
 import com.bigbook.app.book.dto.ChangeFavouritesRequestDto;
+import com.bigbook.app.book.dto.CreateBookRequestDto;
 import com.bigbook.app.book.dto.SearchBookResponseDto;
 import com.bigbook.app.book.exceptions.BookAlreadyExistsException;
 import com.bigbook.app.exceptions.BadRequestException;
@@ -47,7 +48,8 @@ public class BookService {
         );
     }
 
-    public void saveBook(BookEntity bookEntity) {
+    public void saveBook(CreateBookRequestDto requestDto) {
+        BookEntity bookEntity = new BookEntity(requestDto);
         if (bookRepository.existsById(bookEntity.getIsbn()))
             throw new BookAlreadyExistsException();
         bookRepository.saveAndFlush(bookEntity);

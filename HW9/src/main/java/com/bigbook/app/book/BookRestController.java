@@ -2,6 +2,7 @@ package com.bigbook.app.book;
 
 import com.bigbook.app.book.dto.BookInfoDto;
 import com.bigbook.app.book.dto.ChangeFavouritesRequestDto;
+import com.bigbook.app.book.dto.CreateBookRequestDto;
 import com.bigbook.app.book.dto.SearchBookResponseDto;
 import com.bigbook.app.utils.Response;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class BookRestController {
 
     @PreAuthorize("hasAuthority('ADD_NEW_BOOK')")
     @PostMapping("/create")
-    public Response<Void> createBookPost(@RequestBody BookEntity bookEntity) {
-        bookService.saveBook(bookEntity);
+    public Response<Void> createBookPost(@Valid @RequestBody CreateBookRequestDto requestDto) {
+        bookService.saveBook(requestDto);
         return Response.of("Successfully added", null);
     }
 
