@@ -28,3 +28,7 @@ JpaRepository, JpaSpecificationExecutor, Specification, PageRequest
 <a href="HW8">HW8 Spring Security:</a>
 <br>
 WebSecurityConfigurerAdapter, Filters, JWT, Authorities, PreAuthorize, Cookie
+
+<a href="HW9">HW9 Validation:</a>
+<br>
+@NotBlank, @Pattern, @Valid...
