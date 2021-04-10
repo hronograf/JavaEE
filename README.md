@@ -24,3 +24,7 @@ hibernate, @Entity,  EntityManager, h2database
 <a href="HW7">HW7 Spring Data:</a>
 <br>
 JpaRepository, JpaSpecificationExecutor, Specification, PageRequest
+
+<a href="HW8">HW8 Spring Security:</a>
+<br>
+WebSecurityConfigurerAdapter, Filters, JWT, Authorities, PreAuthorize, Cookie
