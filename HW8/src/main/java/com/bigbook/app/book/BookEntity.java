@@ -1,21 +1,21 @@
 package com.bigbook.app.book;
 
 
+import com.bigbook.app.user.UserEntity;
 import lombok.*;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Set;
 
-@Entity
-@Table(name = "book")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+
+@Entity
+@Table(name = "book")
 public class BookEntity {
 
     @Id
@@ -28,6 +28,9 @@ public class BookEntity {
     @Column(name = "author")
     private String author;
 
+    @ManyToMany(mappedBy = "favoriteBooks")
+    private Set<UserEntity> likes;
+
     public static Specification<BookEntity> titleIgnoreCaseContains(String title) {
         String lowercaseTitle = title.toLowerCase();
         return (book, cq, cb) -> cb.like(cb.lower(book.get("title")), "%" + lowercaseTitle + "%");
@@ -35,6 +38,10 @@ public class BookEntity {
 
     public static Specification<BookEntity> isbnContains(String isbn) {
         return (book, cq, cb) -> cb.like(book.get("isbn"), "%" + isbn + "%");
+    }
+
+    public BookEntity(String isbn) {
+        this.isbn = isbn;
     }
 
 }

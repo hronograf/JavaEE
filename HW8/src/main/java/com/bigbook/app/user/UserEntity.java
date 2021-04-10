@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -32,11 +32,11 @@ public class UserEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_to_permissions", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
-    private List<PermissionEntity> permissions;
+    private Set<PermissionEntity> permissions;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "user_likes_book", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "book_isbn"))
-    private List<BookEntity> favoriteBooks;
+    private Set<BookEntity> favoriteBooks;
 
 }
 

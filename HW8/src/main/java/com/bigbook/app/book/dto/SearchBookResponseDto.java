@@ -1,6 +1,5 @@
 package com.bigbook.app.book.dto;
 
-import com.bigbook.app.book.BookEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +12,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class SearchBookResponseDto {
-    private List<BookEntity> books;
+    private List<BookInfoDto> books;
     private int canBeShown;
 }

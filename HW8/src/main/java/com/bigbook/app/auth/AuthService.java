@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +32,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    private final String ROOT_URL = "/";
+    private final String ROOT_URL = "/books";
     private final String LOGIN_URL = "/auth/login";
 
     public RedirectResponseDto login(AuthRequestDto authRequestDto, HttpServletResponse servletResponse) {
@@ -59,7 +59,7 @@ public class AuthService {
 
         UserEntity userEntity = UserEntity.builder()
                 .username(registerRequestDto.getUsername())
-                .permissions(List.of(PermissionEntity.fromId(Permission.ADD_BOOK_TO_FAVORITE.ordinal())))
+                .permissions(Set.of(PermissionEntity.fromId(Permission.ADD_BOOK_TO_FAVORITE.ordinal())))
                 .password(passwordEncoder.encode(registerRequestDto.getPassword()))
                 .build();
         userRepository.saveAndFlush(userEntity);

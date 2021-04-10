@@ -12,7 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -46,7 +46,7 @@ public class DbInitializer {
                 UserEntity.builder()
                         .username("user")
                         .password("$2y$12$4Nquq9ZNFW78ONR3DfXFJeyCA27KJ1A.D2jxUGwyUSOhG8SBHNS0e") // user
-                        .permissions(List.of(PermissionEntity.fromId(Permission.ADD_BOOK_TO_FAVORITE.ordinal())))
+                        .permissions(Set.of(PermissionEntity.fromId(Permission.ADD_BOOK_TO_FAVORITE.ordinal())))
                         .build()
         );
     }

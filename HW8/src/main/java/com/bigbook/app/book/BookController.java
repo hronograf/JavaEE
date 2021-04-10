@@ -1,30 +1,40 @@
 package com.bigbook.app.book;
 
-import com.bigbook.app.book.dto.SearchBookResponseDto;
-import com.bigbook.app.utils.Response;
+import com.bigbook.app.auth.jwt.JwtTokenService;
+import com.bigbook.app.user.UserEntity;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
 @RequiredArgsConstructor
+
+@Controller
+@RequestMapping("/books")
 public class BookController {
 
     private final BookRepository bookRepository;
     private final BookService bookService;
 
-    @PostMapping("/books/create")
-    public Response<String> createBookPost(@RequestBody BookEntity bookEntity) {
-        bookService.saveBook(bookEntity);
-        return Response.of("Successfully added", null);
+    @GetMapping({"", "/"})
+    public String index(Model model) {
+        model.addAttribute("books", bookRepository.findAll());
+        return "books";
     }
 
-    @GetMapping("/books/search")
-    public Response<SearchBookResponseDto> getFilteredByTitleBooks(
-            @RequestParam(value = "title", defaultValue = "") String title,
-            @RequestParam(value = "isbn", defaultValue = "") String isbn,
-            @RequestParam(value = "page", defaultValue = "0") int pageNumber
-    ) {
-        return Response.success(bookService.findBooks(title, isbn, pageNumber));
+    @GetMapping("/favourites")
+    public String getFavourites(Model model) {
+        UserEntity contextUser = JwtTokenService.getContextUser();
+        model.addAttribute("books", contextUser.getFavoriteBooks());
+        return "favourites";
+    }
+
+    @GetMapping("/{isbn}")
+    public String getBookInfo(@PathVariable("isbn") String isbn, Model model) {
+        bookService.getBookInfo(isbn, model);
+        return "bookPage";
     }
 
 }
